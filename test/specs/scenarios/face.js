@@ -11,7 +11,7 @@ const options = {
     'CameraPermissions',
     'Confirm',
     'DocumentSelector',
-    'PassportImageGuide',
+    'PassportUploadImageGuide',
     'DocumentUpload',
     'LivenessIntro',
     'SelfieIntro',
@@ -29,7 +29,7 @@ export const faceScenarios = (lang) => {
       cameraPermissions,
       confirm,
       documentSelector,
-      passportImageGuide,
+      passportUploadImageGuide,
       documentUpload,
       livenessIntro,
       selfieIntro,
@@ -42,7 +42,7 @@ export const faceScenarios = (lang) => {
     it('should return unsupported file type error for selfie', async () => {
       goToPassportUploadScreen(driver, welcome, documentSelector, `?language=${lang}&async=false&useUploader=true`)
       documentUpload.clickUploadButton()
-      uploadFileAndClickConfirmButton(passportImageGuide, confirm, 'passport.jpg')
+      uploadFileAndClickConfirmButton(passportUploadImageGuide, confirm, 'passport.jpg')
       uploadFileAndClickConfirmButton(documentUpload, confirm, 'national_identity_card.pdf')
       confirm.verifyUnsuppoertedFileError(copy)
     })
@@ -50,7 +50,7 @@ export const faceScenarios = (lang) => {
     it('should upload selfie', async () => {
       goToPassportUploadScreen(driver, welcome, documentSelector,`?language=${lang}&async=false&useUploader=true`)
       documentUpload.clickUploadButton()
-      uploadFileAndClickConfirmButton(passportImageGuide, confirm, 'passport.jpg')
+      uploadFileAndClickConfirmButton(passportUploadImageGuide, confirm, 'passport.jpg')
       uploadFileAndClickConfirmButton(documentUpload, confirm, 'face.jpeg')
       verificationComplete.verifyUIElements(copy)
       verificationComplete.checkBackArrowIsNotDisplayed()
@@ -59,7 +59,7 @@ export const faceScenarios = (lang) => {
     it('should take one selfie using the camera stream', async () => {
       goToPassportUploadScreen(driver, welcome, documentSelector,`?language=${lang}&async=false`)
       documentUpload.clickUploadButton()
-      uploadFileAndClickConfirmButton(passportImageGuide, confirm, 'passport.jpg')
+      uploadFileAndClickConfirmButton(passportUploadImageGuide, confirm, 'passport.jpg')
       selfieIntro.verifyUIElementsOnTheSelfieIntroScreen(copy)
       selfieIntro.clickOnContinueButton()
       camera.takeSelfie()
@@ -70,7 +70,7 @@ export const faceScenarios = (lang) => {
 
     it('should complete the flow when snapshot is disabled', async () => {
       goToPassportUploadScreen(driver, welcome, documentSelector,`?language=${lang}&async=false&useMultipleSelfieCapture=false`)
-      uploadFileAndClickConfirmButton(passportImageGuide, confirm, 'passport.jpg')
+      uploadFileAndClickConfirmButton(passportUploadImageGuide, confirm, 'passport.jpg')
       selfieIntro.verifyUIElementsOnTheSelfieIntroScreen(copy)
       selfieIntro.clickOnContinueButton()
       camera.takeSelfie()
@@ -82,7 +82,7 @@ export const faceScenarios = (lang) => {
     it('should return no face found error for selfie', async () => {
       goToPassportUploadScreen(driver, welcome, documentSelector,`?language=${lang}&async=false&useUploader=true`)
       documentUpload.clickUploadButton()
-      uploadFileAndClickConfirmButton(passportImageGuide, confirm, 'passport.jpg')
+      uploadFileAndClickConfirmButton(passportUploadImageGuide, confirm, 'passport.jpg')
       uploadFileAndClickConfirmButton(documentUpload, confirm, 'llama.jpg')
       confirm.verifyNoFaceError(copy)
     })
@@ -90,7 +90,7 @@ export const faceScenarios = (lang) => {
     it('should return multiple faces error', async () => {
       goToPassportUploadScreen(driver, welcome, documentSelector,`?language=${lang}&async=false&useUploader=true`)
       documentUpload.clickUploadButton()
-      uploadFileAndClickConfirmButton(passportImageGuide, confirm, 'passport.jpg')
+      uploadFileAndClickConfirmButton(passportUploadImageGuide, confirm, 'passport.jpg')
       uploadFileAndClickConfirmButton(documentUpload, confirm, 'two_faces.jpg')
       confirm.verifyMultipleFacesError(copy)
     })
@@ -99,7 +99,7 @@ export const faceScenarios = (lang) => {
       goToPassportUploadScreen(driver, welcome, documentSelector,`?language=${lang}&async=false&liveness=true`)
       driver.executeScript('window.navigator.mediaDevices.enumerateDevices = () => Promise.resolve([])')
       documentUpload.clickUploadButton()
-      uploadFileAndClickConfirmButton(passportImageGuide, confirm, 'passport.jpg')
+      uploadFileAndClickConfirmButton(passportUploadImageGuide, confirm, 'passport.jpg')
       crossDeviceIntro.verifyTitle(copy)
     })
 
@@ -108,7 +108,7 @@ export const faceScenarios = (lang) => {
       driver.executeScript('window.navigator.mediaDevices.enumerateDevices = () => Promise.resolve([{ kind: "video" }])')
       driver.executeScript('window.MediaRecorder = undefined')
       documentUpload.clickUploadButton()
-      uploadFileAndClickConfirmButton(passportImageGuide, confirm, 'passport.jpg')
+      uploadFileAndClickConfirmButton(passportUploadImageGuide, confirm, 'passport.jpg')
       selfieIntro.verifyUIElementsOnTheSelfieIntroScreen(copy)
       selfieIntro.clickOnContinueButton()
       cameraPermissions.verifyUIElementsOnTheCameraPermissionsScreen(copy)
@@ -118,7 +118,7 @@ export const faceScenarios = (lang) => {
       goToPassportUploadScreen(driver, welcome, documentSelector,`?language=${lang}&liveness=true`)
       driver.executeScript('window.navigator.mediaDevices.enumerateDevices = () => Promise.resolve([{ kind: "video" }])')
       documentUpload.clickUploadButton()
-      uploadFileAndClickConfirmButton(passportImageGuide, confirm, 'passport.jpg')
+      uploadFileAndClickConfirmButton(passportUploadImageGuide, confirm, 'passport.jpg')
       livenessIntro.verifyUIElementsOnTheLivenessIntroScreen(copy)
       livenessIntro.clickOnContinueButton()
     })
@@ -127,7 +127,7 @@ export const faceScenarios = (lang) => {
       goToPassportUploadScreen(driver, welcome, documentSelector,`?language=${lang}&liveness=true`)
       driver.executeScript('window.navigator.mediaDevices.enumerateDevices = () => Promise.resolve([{ kind: "video" }])')
       documentUpload.clickUploadButton()
-      uploadFileAndClickConfirmButton(passportImageGuide, confirm, 'passport.jpg')
+      uploadFileAndClickConfirmButton(passportUploadImageGuide, confirm, 'passport.jpg')
       livenessIntro.verifyUIElementsOnTheLivenessIntroScreen(copy)
       livenessIntro.clickOnContinueButton()
       camera.continueButton().click()
@@ -139,7 +139,7 @@ export const faceScenarios = (lang) => {
       goToPassportUploadScreen(driver, welcome, documentSelector,`?language=${lang}&liveness=true`)
       driver.executeScript('window.navigator.mediaDevices.enumerateDevices = () => Promise.resolve([{ kind: "video" }])')
       documentUpload.clickUploadButton()
-      uploadFileAndClickConfirmButton(passportImageGuide, confirm, 'passport.jpg')
+      uploadFileAndClickConfirmButton(passportUploadImageGuide, confirm, 'passport.jpg')
       livenessIntro.verifyUIElementsOnTheLivenessIntroScreen(copy)
       livenessIntro.clickOnContinueButton()
       camera.recordVideo()
